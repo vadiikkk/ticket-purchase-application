@@ -18,7 +18,7 @@ public class Session {
     @JoinColumn(name = "user_id", nullable = false)
     User user_id;
 
-    @Column(name = "tocken", nullable = false)
+    @Column(name = "token", nullable = false)
     String token;
 
     @Column(name = "expires", nullable = false)
