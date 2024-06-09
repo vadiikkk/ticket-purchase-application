@@ -1,14 +1,10 @@
 package org.example.authorizationservice.security;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.example.authorizationservice.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,18 +22,7 @@ import org.springframework.web.cors.CorsConfiguration;
 @AllArgsConstructor
 public class SecurityConfigurator {
 
-    UserService userService;
-    TokenFilter tokenFilter;
-
-    @Autowired
-    public void setTokenFilter(TokenFilter tokenFilter) {
-        this.tokenFilter = tokenFilter;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private final TokenFilter tokenFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,7 +50,7 @@ public class SecurityConfigurator {
                 )
                 .authorizeHttpRequests(aurhorize -> aurhorize
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/validate/**").authenticated()
+                        .requestMatchers("/session/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

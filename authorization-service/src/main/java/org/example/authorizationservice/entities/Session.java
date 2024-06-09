@@ -12,15 +12,15 @@ public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    User user_id;
+    private User userId;
 
     @Column(name = "token", nullable = false)
-    String token;
+    private String token;
 
     @Column(name = "expires", nullable = false)
-    LocalDateTime expires;
+    private LocalDateTime expires;
 }

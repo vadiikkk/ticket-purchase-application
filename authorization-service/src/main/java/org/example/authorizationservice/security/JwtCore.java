@@ -1,6 +1,7 @@
 package org.example.authorizationservice.security;
 
 import io.jsonwebtoken.security.Keys;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
+@Data
 public class JwtCore {
     @Value("${testing.app.secret}")
-    String secret;
+    private String secret;
 
     @Value("${testing.app.lifetime}")
-    int lifetime;
+    private int lifetime;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));

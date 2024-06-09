@@ -4,22 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.authorizationservice.entities.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
 
 @Data
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    Integer id;
-    String nickname;
-    String email;
-    String password;
-    LocalDateTime created;
+    private Integer id;
+    private String nickname;
+    private String email;
+    private String password;
+    private LocalDateTime created;
 
     public static UserDetailsImpl build(User user) {
         return new UserDetailsImpl(
