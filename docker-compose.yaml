@@ -1,0 +1,28 @@
+services:
+  db-auth:
+    container_name: db-auth
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: auth-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+
+  db-order:
+    container_name: db-order
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: order-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5433:5432"
+    volumes:
+      - order-db-data:/var/lib/postgresql/data
+
+volumes:
+  auth-db-data:
+  order-db-data:
