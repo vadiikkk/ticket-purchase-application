@@ -3,7 +3,6 @@ package org.example.authorizationservice.services;
 import lombok.AllArgsConstructor;
 import org.example.authorizationservice.dto.TokenResponse;
 import org.example.authorizationservice.entities.Session;
-import org.example.authorizationservice.entities.User;
 import org.example.authorizationservice.exceptions.SessionNotFoundException;
 import org.example.authorizationservice.repositories.SessionRepository;
 import org.example.authorizationservice.security.UserDetailsImpl;
@@ -22,19 +21,11 @@ public class SessionService {
     public TokenResponse getUserData(Principal principal) {
         UserDetailsImpl userDetails = (UserDetailsImpl) userService.loadUserByUsername(principal.getName());
 
-        User user = User.builder()
-                .id(userDetails.getId())
-                .nickname(userDetails.getNickname())
-                .password(userDetails.getPassword())
-                .email(userDetails.getEmail())
-                .created(userDetails.getCreated())
-                .build();
-
-        Session session = sessionRepository.findByUserId(user).orElseThrow(() -> new SessionNotFoundException(
+        Session session = sessionRepository.findByUserId(userDetails.getId()).orElseThrow(() -> new SessionNotFoundException(
                 "Session not found!"));
 
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setUserId(user.getId());
+        tokenResponse.setUserId(userDetails.getId());
         tokenResponse.setExpired(session.getExpires());
 
         return tokenResponse;

@@ -89,7 +89,7 @@ public class SecurityService {
         ));
 
         Session session = new Session();
-        session.setUserId(user);
+        session.setUserId(user.getId());
         session.setToken(jwt);
         session.setExpires(LocalDateTime.now().plusSeconds(jwtCore.getLifetime() / 1000));
         sessionRepository.save(session);
